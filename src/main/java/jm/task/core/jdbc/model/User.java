@@ -1,21 +1,20 @@
 package jm.task.core.jdbc.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@Entity
 @Table(name = "users")
 public class User {
     @Id
     private Long id;
 
-    @Column
+    @Column(name = "name")
     private String name;
 
-    @Column
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column
+    @Column(name = "age")
     private Byte age;
 
     public User() {
@@ -61,18 +60,6 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (!name.equals(user.name)) return false;
-        if (!lastName.equals(user.lastName)) return false;
-        return age.equals(user.age);
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
@@ -82,8 +69,22 @@ public class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (!id.equals(user.id)) return false;
+        if (!name.equals(user.name)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        return age.equals(user.age);
+    }
+
+    @Override
     public int hashCode() {
-        int result = name.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + lastName.hashCode();
         result = 31 * result + age.hashCode();
         return result;
